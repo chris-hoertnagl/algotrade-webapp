@@ -1,0 +1,91 @@
+{% extends "base.html" %}>
+{% load static %}
+{% load tags %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {#FIRST SECTION#}
+        <section class="row mx-auto">
+            {#ACCOUNT INFO#}
+            <div class="col-md-6 py-5">
+                <div class="h-100 p-5" style="background-color: rgba(255,255,255,0.4);">
+                    <h2>Account Info</h2>
+                    <div class="p-3 mb-2" id="account_div">
+                        <h3>Waiting for Binance API Response</h3>
+                    </div>
+                </div>
+            </div>
+
+            {#ACTIVE ALGORITHM MODEL#}
+            <div class="col-md-6 py-5">
+                 <div class="h-100 p-5" style="background-color: rgba(255,255,255,0.4);">
+                    <h2>Active algorithm model</h2>
+                    <input value="{{ algorithm.symbol }}" id="symbol" hidden>
+                    <div class="p-3 mb-2">
+                        <p>Name: {{ algorithm.name }}</p>
+                        <p>Symbol: {{ algorithm.symbol }}</p>
+                        <p>Stop loss: {{ algorithm.stop_loss }}</p>
+                        <p>Active: {{ algorithm.active }}</p>
+                        <p>Take profit: {{ algorithm.take_profit }}</p>
+                        <p>Trade quantity: {{ algorithm.trade_qty }}</p>
+                        <p>Last performance: {{ algorithm.performance|floatformat:4 }}%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {#SECOND SECTION#}
+        <div class="row mx-auto">
+            {#REALTIME PRICE#}
+            <div class="col py-5">
+                <div id="chart"></div>
+            </div>
+        </div>
+
+        {#THIRD SECTION#}
+
+        {#ALGORITHM CONTROL CENTER#}
+        <div class="row mx-auto">
+            <div class="col py-5">
+                 <div class="h-100 p-5" style="background-color: rgba(255,255,255,0.4);">
+                    <h2>Algorithm control center</h2>
+                    <p>
+                    <form style="display: inline;" action="#" method="post" id="start_form">{% csrf_token %}
+                        <input type="submit" class="btn btn-success my-2" value="Start Algorithm">
+                    </form>
+                    <form style="display: inline;" action="#" id="stop_form">{% csrf_token %}
+                        <input type="submit" class="btn btn-danger my-2" value="Stop Algorithm">
+                    </form>
+                    </p>
+                    <div class="p-3 mb-2 bg-dark text-white" id="log_div">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#ORDER HISTORY#}
+        <div class="row mx-auto">
+            <div class="col py-5">
+                 <div class="h-100 p-5" style="background-color: rgba(255,255,255,0.4);">
+                    <h2>Order history</h2>
+                    {% for order in orders %}
+                        <div class="p-3 mb-2 border border-dark">
+                            <p class="lead">symbol: {{ order.symbol }}</p>
+                            <p class="lead">status: {{ order.status }}</p>
+                            <p class="lead">price: {{ order.price }}</p>
+                            <p class="lead">quantity: {{ order.quantity }}</p>
+                            <p class="lead">side: {{ order.side }}</p>
+                            <p class="lead">time: {{ order.time }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="{% static 'chart.js' %}"></script>
+    <script src="{% static 'home.js' %}"></script>
+
+{% endblock %}

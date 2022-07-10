@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load tags %}
+
+{% block content %}
+    <div class="container-fluid" style="background-image: url('{% static 'images/background.jpg' %}');">
+        {% csrf_token %}
+        {#CREATE AN ALGORITHM#}
+        <section class="row mx-auto">
+            <div class="col-md-5 py-5">
+                 <div class="h-100 p-5" style="background-color: rgba(255,255,255,0.4);">
+                    <h2>Algorithm creation</h2>
+
+                    <form method="POST" enctype="multipart/form-data">
+                        <!-- Security token -->
+                        {% csrf_token %}
+                        <!-- Using the formset -->
+                        {{ form.as_p }}
+                        <input type="submit" class="btn-lg btn-success my-2" value="Create" name='command'>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        {#AVAILABLE ALGORITHMS#}
+        <section class="row mx-auto">
+            <div class="col py-5">
+                 <div class="h-100 p-5" style="background-color: rgba(255,255,255,0.4);">
+                    <h2>Available algorithms</h2>
+
+                    {% for algorithm in algorithms %}
+                        <div class="p-3 mb-2 border border-dark">
+                            <form action="#" method="post">{% csrf_token %}
+                                <input type='hidden' value='delete' name='command'>
+                                <input type='hidden' value='{{ algorithm.name }}' name='primary_key'>
+                                <div class="row">
+                                    <div class="col-3">Name: {{ algorithm.name }}</div>
+                                    <div class="col-3">Symbol: {{ algorithm.symbol }}</div>
+                                    <div class="col-3">Stop loss: {{ algorithm.stop_loss }}</div>
+                                    <div class="col-3">Active: {{ algorithm.active }}</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-3">Take profit: {{ algorithm.take_profit }}</div>
+                                    <div class="col-3">Trade quantity: {{ algorithm.trade_qty }}</div>
+                                    <div class="col-3">Last performance: {{ algorithm.performance|floatformat:4 }}%
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="btn btn-danger my-2" type="submit" value="Delete" name="command">
+                                        <input class="btn btn-success my-2" type="submit" value="SetActive" name="command">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

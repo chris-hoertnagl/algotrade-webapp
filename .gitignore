@@ -1,0 +1,9 @@
+#IDE
+*.idea/
+
+#PYTHON
+**/__pycache__/**
+
+#DJANGO
+**/migrations/**
+**/static_root/**

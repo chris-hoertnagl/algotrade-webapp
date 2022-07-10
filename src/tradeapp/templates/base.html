@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load tags %}
+<head>
+    <meta charset="UTF-8">
+    <title>Algotrade</title>
+
+    {# Bootstrap CSS #}
+    {#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"#}
+    {#          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">#}
+
+    {#     Old Bootstrap CSS #}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+</head>
+
+<body style="background-image: url('{% static 'images/background.jpg' %}'); height:100%;">
+    {% if user.is_authenticated %}
+    <nav class="navbar" style="background-color: rgba(255,255,255,0.7);">
+        <div class="container-fluid row">
+            <a class="navbar-brand col-1" href="{% url 'home' %}">
+                <img src="{% static 'images/dashboard_icon.png' %}" alt="dashboard"
+                     width="80">
+            </a>
+            <a class="navbar-brand col-1" href="{% url 'manage' %}">
+                <img src="{% static 'images/manage_icon.png' %}" alt="manage"
+                     width="80">
+            </a>
+            <a class="navbar-brand col-1" href="{% url 'logout' %}">
+                <img src="{% static 'images/logout_icon.png' %}" alt="logout"
+                     width="80">
+            </a>
+            <a class="navbar-brand col-6">
+            </a>
+            <a class="navbar-brand col-2 justify-content-around" href="#">
+                <img src="{% static 'images/logo_transparent.png' %}" alt="logo"
+                     width="200">
+            </a>
+        </div>
+    </nav>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
